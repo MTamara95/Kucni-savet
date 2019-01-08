@@ -12,6 +12,8 @@ namespace KucniSavet
         {
             Console.WriteLine("This is my app!");
             Console.WriteLine("Some changes...");
+
+            Class1.SomeMethod();
         }
     }
 }
