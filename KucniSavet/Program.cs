@@ -5,14 +5,17 @@ using System.Threading.Tasks;
 
 namespace KucniSavet
 {
-
     class Program
     {
         static void Main(string[] args)
         {
             Console.WriteLine("Unesite informacije o zgradi:");
             var zgrada = new Zgrada();
-            zgrada.Unos();
+            //zgrada.UnosZgrada();
+
+            Console.WriteLine("Unesite informacije o predsedniku kucnog saveta:");
+            var predsednik = new Predsednik();
+            predsednik.UnosPredsednik();
         }
     }
 }

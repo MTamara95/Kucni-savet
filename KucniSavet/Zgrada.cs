@@ -13,7 +13,7 @@ namespace KucniSavet
         public short BrojStanova { get; set; }
         public List<short> NizStanova { get; set; }
 
-        public void Unos()
+        public void UnosZgrada()
         {
             Console.Write("Adresa: ");
             Adresa = Console.ReadLine();
