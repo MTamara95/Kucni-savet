@@ -97,6 +97,8 @@ namespace KucniSavet
                     stanar.UnosStanar(tmpKorisnickoIme, tmpLozinka);
                     stanar.IspisDatoteka(tmpKorisnickoIme);
                 }
+                else if (odgovor.CompareTo("ne") != 0)
+                    throw new Exception("Unet odgovor je razlicit od trazenog (da/ne)");
             }
             else // nalog vec postoji, ispitujemo validnost lozinke
             {
@@ -107,6 +109,8 @@ namespace KucniSavet
                     var odgovor = Console.ReadLine();
                     if (odgovor.CompareTo("da") == 0)
                         return ~Ok;
+                    else if (odgovor.CompareTo("ne") != 0)
+                        throw new Exception("Unet odgovor je razlicit od trazenog (da/ne)");
                 }
             }
 
@@ -143,6 +147,8 @@ namespace KucniSavet
                             var odg = Console.ReadLine();
                             if (odg.CompareTo("da") == 0)
                                 return ~Ok;
+                            else if (odg.CompareTo("ne") != 0)
+                                throw new Exception("Unet odgovor je razlicit od trazenog (da/ne)");
                             break;
                         }
                         i++;
@@ -162,6 +168,8 @@ namespace KucniSavet
                     var odg = Console.ReadLine();
                     if (odg.CompareTo("da") == 0)
                         return ~Ok;
+                    else if (odg.CompareTo("ne") != 0)
+                        throw new Exception("Unet odgovor je razlicit od trazenog (da/ne)");
                 }
                 else if (odgovor == 3) // odjava
                 {

@@ -30,7 +30,15 @@ namespace KucniSavet
         public virtual void UnosGodinaRodjenja()
         {
             Console.Write("Godina rodjenja: ");
-            GodinaRodjenja = Convert.ToInt16(Console.ReadLine());
+            try
+            {
+                GodinaRodjenja = Convert.ToInt16(Console.ReadLine());
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Nije unet broj.");
+                throw;
+            }
         }
 
         public void UnosEmail() { 
@@ -51,7 +59,15 @@ namespace KucniSavet
         public void UnosBrojStana()
         {
             Console.Write("Broj stana: ");
-            BrojStana = Convert.ToInt16(Console.ReadLine());
+            try
+            {
+                BrojStana = Convert.ToInt16(Console.ReadLine());
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Nije unet broj.");
+                throw;
+            }
         }
 
         public virtual void UnosNosilac()
@@ -60,8 +76,10 @@ namespace KucniSavet
             var tmp = Console.ReadLine();
             if (tmp.CompareTo("da") == 0)
                 Nosilac = true;
-            else
+            else if (tmp.CompareTo("ne") == 0)
                 Nosilac = false;
+            else
+                throw new Exception("Unet odgovor je razlicit od trazenog (da/ne)");
         }
 
         public void UnosStanar(string tmpKorisnickoIme, string tmpLozinka) 
