@@ -57,13 +57,14 @@ namespace KucniSavet
             var tmpLozinka = Console.ReadLine();
 
             // proveravamo da li postoji korisnik - predsednik / stanar
-            var ind = 0;
+            var indStanar = 0;
+            var indPredsednik = 0;
             var indSifra = 1; // lozinku proveravamo samo ako nalog vec postoji
             // 1 - predsednik (u fajlu predsednik.txt 5. linija je korisnicko ime, a 6. linija je sifra)
             var sadrzajPredsednik = File.ReadAllLines(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\nalozi\predsednik.txt");
             if (tmpKorisnickoIme.CompareTo(sadrzajPredsednik[4]) == 0)
             {
-                ind = 1; // uneti korisnik je predsednik
+                indPredsednik = 1; // uneti korisnik je predsednik
                 if (tmpLozinka.CompareTo(sadrzajPredsednik[5]) != 0) // lozinka nije ispravna
                     indSifra = 0;
             }
@@ -74,7 +75,7 @@ namespace KucniSavet
                 var parcijalniNaziv = Path.GetFileName(fajl).Split('_')[0]; // naziv fajla bez "_zahtev.txt"
                 if (tmpKorisnickoIme.CompareTo(parcijalniNaziv) == 0)
                 {
-                    ind = 1;
+                    indStanar = 1; // uneti korisnik je stanar
                     // proveravamo lozinku u okviru tog fajla - 6. linija
                     var sadrzajStanar = File.ReadAllLines(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\nalozi\" + tmpKorisnickoIme + "_zahtev.txt");
                     if (tmpLozinka.CompareTo(sadrzajStanar[5]) != 0)
@@ -85,7 +86,7 @@ namespace KucniSavet
 
             // ako nalog jos uvek nije kreiran - ispisuje se odgovarajuca poruka, i nudi se korisniku da
             // posalje zahtev za kreiranje naloga predsedniku
-            if (ind == 0)
+            if (indStanar == 0 && indPredsednik == 0) // uneti korisnik nije ni stanar ni predsednik
             {
                 Console.WriteLine("Nalog Vam jos uvek nije kreiran.");
                 Console.WriteLine("Da li zelite da posaljete zahtev za kreiranje naloga predsedniku? (da/ne)");
@@ -106,6 +107,65 @@ namespace KucniSavet
                     var odgovor = Console.ReadLine();
                     if (odgovor.CompareTo("da") == 0)
                         return ~Ok;
+                }
+            }
+
+            if(indStanar == 1) // stanar se prijavio na sistem
+            {
+                Console.WriteLine("1. Zapisnik sa saveta stanara");
+                Console.WriteLine("2. Informacije o stanarima u zgradi");
+                Console.WriteLine("3. Odjava");
+                var odgovor = Convert.ToInt16(Console.ReadLine());
+
+                if (odgovor == 1) // zapisnik sa saveta stanara...
+                {
+                    // pojavljuje se lista sa nazivima datoteka zapisnika sa saveta stanara:
+                    var fajloviZapisnik = Directory.GetFiles(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\zapisnici");
+                    var i = 0;
+                    foreach (var fajl in fajloviZapisnik)
+                    {
+                        Console.WriteLine("{0}. {1}", i, Path.GetFileName(fajl));
+                        i++;
+                    }
+                    Console.WriteLine("...");
+                    Console.WriteLine("Koju datoteku zelite da otvorite?");
+                    var odgDatoteka = Convert.ToInt16(Console.ReadLine());
+                    Console.WriteLine("---------------------------------");
+                    i = 0;
+                    foreach (var fajl in fajloviZapisnik)
+                    {
+                        if(odgDatoteka == i)
+                        {
+                            // ispisuje se sadrzaj zeljene datoteke
+                            Console.WriteLine(File.ReadAllText(fajl));
+                            Console.WriteLine("---------------------------------");
+                            Console.WriteLine("Da li zelite da se vratite na pocetni meni (da/ne)?");
+                            var odg = Console.ReadLine();
+                            if (odg.CompareTo("da") == 0)
+                                return ~Ok;
+                            break;
+                        }
+                        i++;
+                    }
+                }
+                else if (odgovor == 2) // informacije o stanarima u zgradi
+                {
+                    // ispis svih stanara koji zive u njegovoj zgradi
+                    var fajloviZgrada = Directory.GetFiles(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\nalozi");
+                    foreach (var fajl in fajloviZgrada)
+                    {
+                        var imeFajla = Path.GetFileName(fajl);
+                        if(imeFajla.CompareTo("predsednik.txt") != 0) // naziv tog fajla ne sadrzi korisnicko ime stanara
+                            Console.WriteLine(imeFajla.Split('_')[0]); // ispisuje se samo korisicko ime
+                    }
+                    Console.WriteLine("Da li zelite da se vratite na pocetni meni (da/ne)?");
+                    var odg = Console.ReadLine();
+                    if (odg.CompareTo("da") == 0)
+                        return ~Ok;
+                }
+                else if (odgovor == 3) // odjava
+                {
+                    return ~Ok; // vratice korisnika na pocetni meni...
                 }
             }
 
