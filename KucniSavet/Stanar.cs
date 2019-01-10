@@ -38,16 +38,14 @@ namespace KucniSavet
             Email = Console.ReadLine();
         }
 
-        public void UnosKorisnickoIme()
+        public void UnosKorisnickoIme(string tmpKorisnickoIme)
         {
-            Console.Write("Korisnicko ime: ");
-            KorisnickoIme = Console.ReadLine();
+            KorisnickoIme = tmpKorisnickoIme;
         }
 
-        public void UnosLozinka()
+        public void UnosLozinka(string tmpLozinka)
         {
-            Console.Write("Lozinka: ");
-            Lozinka = Console.ReadLine();
+            Lozinka = tmpLozinka;
         }
 
         public void UnosBrojStana()
@@ -66,18 +64,32 @@ namespace KucniSavet
                 Nosilac = false;
         }
 
-        public void UnosStanar()
+        public void UnosStanar(string tmpKorisnickoIme, string tmpLozinka) 
         {
             UnosIme();
             UnosPrezime();
             UnosGodinaRodjenja();
             UnosEmail();
-            UnosKorisnickoIme();
-            UnosLozinka();
+            UnosKorisnickoIme(tmpKorisnickoIme);
+            UnosLozinka(tmpLozinka);
             UnosBrojStana();
             UnosNosilac();
         }
 
-        
+        public void IspisDatoteka(string tmpKorisnickoIme)
+        {
+            using (System.IO.StreamWriter file =
+                new System.IO.StreamWriter("../../../nalozi/" + tmpKorisnickoIme + "_zahtev.txt"))
+            {
+                file.WriteLine(Ime);
+                file.WriteLine(Prezime);
+                file.WriteLine(GodinaRodjenja);
+                file.WriteLine(Email);
+                file.WriteLine(KorisnickoIme);
+                file.WriteLine(Lozinka);
+                file.WriteLine(BrojStana);
+                file.WriteLine(Nosilac);
+            }
+        }
     }
 }

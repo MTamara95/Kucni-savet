@@ -13,6 +13,18 @@ namespace KucniSavet
                 throw new ArgumentException("Predsednik mora biti punoletan");
         }
 
+        public void UnosKorisnickoIme()
+        {
+            Console.Write("Korisnicko ime: ");
+            KorisnickoIme = Console.ReadLine();
+        }
+
+        public void UnosLozinka()
+        {
+            Console.Write("Lozinka: ");
+            Lozinka = Console.ReadLine();
+        }
+
         public override void UnosNosilac()
         {
             base.UnosNosilac();
