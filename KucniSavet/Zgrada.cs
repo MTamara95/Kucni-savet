@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,7 +34,25 @@ namespace KucniSavet
             {
                 NizStanova.Add(tmp[i]);
             }
-            
+
+        }
+
+        public void IspisDatoteka()
+        {
+            using (System.IO.StreamWriter file =
+                new System.IO.StreamWriter("../../../config/zgrada.txt"))
+            {
+                file.WriteLine(Adresa);
+                file.WriteLine(Broj);
+                file.WriteLine(Opstina);
+                file.WriteLine(Grad);
+                file.WriteLine(BrojStanova);
+                foreach (var stan in NizStanova)
+                {
+                    file.Write(stan + " ");
+                }
+                file.WriteLine();
+            }
         }
 
     }

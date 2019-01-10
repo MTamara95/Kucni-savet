@@ -1,17 +1,19 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 
 namespace KucniSavet
 {
     class Stanar
     {
-        protected string Ime;
-        protected string Prezime;
-        protected short GodinaRodjenja;
-        protected string Email;
-        protected string KorisnickoIme;
-        protected string Lozinka;
-        protected short BrojStana;
-        protected bool Nosilac;
+        public string Ime { get; set; }
+        public string Prezime { get; set; }
+        public short GodinaRodjenja { get; set; }
+        public string Email { get; set; }
+        public string KorisnickoIme { get; set; }
+        public string Lozinka { get; set; }
+        public short BrojStana { get; set; }
+        public bool Nosilac { get; set; }
 
         public void UnosIme()
         {
@@ -75,5 +77,7 @@ namespace KucniSavet
             UnosBrojStana();
             UnosNosilac();
         }
+
+        
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 
 namespace KucniSavet
 {
@@ -49,6 +51,22 @@ namespace KucniSavet
                 {
                     continue;
                 }
+            }
+        }
+
+        public void IspisDatoteka()
+        {
+            using (System.IO.StreamWriter file =
+                new System.IO.StreamWriter("../../../nalozi/predsednik.txt"))
+            {
+                file.WriteLine(Ime);
+                file.WriteLine(Prezime);
+                file.WriteLine(GodinaRodjenja);
+                file.WriteLine(Email);
+                file.WriteLine(KorisnickoIme);
+                file.WriteLine(Lozinka);
+                file.WriteLine(BrojStana);
+                file.WriteLine(Nosilac);
             }
         }
     }
