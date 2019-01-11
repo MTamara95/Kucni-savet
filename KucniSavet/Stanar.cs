@@ -47,9 +47,21 @@ namespace KucniSavet
             Email = Console.ReadLine();
         }
 
+        public void UnosKorisnickoIme()
+        {
+            Console.Write("Korisnicko ime: ");
+            KorisnickoIme = Console.ReadLine();
+        }
+
         public void UnosKorisnickoIme(string tmpKorisnickoIme)
         {
             KorisnickoIme = tmpKorisnickoIme;
+        }
+
+        public void UnosLozinka()
+        {
+            Console.Write("Lozinka: ");
+            Lozinka = Console.ReadLine();
         }
 
         public void UnosLozinka(string tmpLozinka)
@@ -83,6 +95,18 @@ namespace KucniSavet
                 throw new Exception("Unet odgovor je razlicit od trazenog (da/ne)");
         }
 
+        public void UnosStanar() // sluzi ako predsednik rucno unosi sve podatke za kreiranje naloga stanara
+        {
+            UnosIme();
+            UnosPrezime();
+            UnosGodinaRodjenja();
+            UnosEmail();
+            UnosKorisnickoIme();
+            UnosLozinka();
+            UnosBrojStana();
+            UnosNosilac();
+        }
+
         public void UnosStanar(string tmpKorisnickoIme, string tmpLozinka) 
         {
             UnosIme();
@@ -93,6 +117,22 @@ namespace KucniSavet
             UnosLozinka(tmpLozinka);
             UnosBrojStana();
             UnosNosilac();
+        }
+
+        public void IspisDatoteka()
+        {
+            using (System.IO.StreamWriter file =
+                new System.IO.StreamWriter("../../../nalozi/" + KorisnickoIme + ".txt"))
+            {
+                file.WriteLine(Ime);
+                file.WriteLine(Prezime);
+                file.WriteLine(GodinaRodjenja);
+                file.WriteLine(Email);
+                file.WriteLine(KorisnickoIme);
+                file.WriteLine(Lozinka);
+                file.WriteLine(BrojStana);
+                file.WriteLine(Nosilac);
+            }
         }
 
         public void IspisDatoteka(string tmpKorisnickoIme)
