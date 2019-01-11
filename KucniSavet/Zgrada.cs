@@ -78,5 +78,18 @@ namespace KucniSavet
             }
         }
 
+        public static void InfoZgrada()
+        {
+            Directory.CreateDirectory(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\config");
+            if (!File.Exists(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\config\zgrada.txt") ||
+                File.ReadAllText(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\config\zgrada.txt").Length == 0) // unosimo podatke samo prvi put
+            {
+                Console.WriteLine("Unesite informacije o zgradi:");
+                var zgrada = new Zgrada();
+                zgrada.UnosZgrada();
+                zgrada.IspisDatoteka();
+            }
+        }
+
     }
 }

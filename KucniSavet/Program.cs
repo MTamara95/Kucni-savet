@@ -12,32 +12,6 @@ namespace KucniSavet
     {
         public const int Ok = 1;
 
-        public static void InfoZgrada()
-        {
-            Directory.CreateDirectory(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\config");
-            if (!File.Exists(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\config\zgrada.txt") ||
-                File.ReadAllText(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\config\zgrada.txt").Length == 0) // unosimo podatke samo prvi put
-            {
-                Console.WriteLine("Unesite informacije o zgradi:");
-                var zgrada = new Zgrada();
-                zgrada.UnosZgrada();
-                zgrada.IspisDatoteka();
-            }
-        }
-
-        public static void InfoPredsednik()
-        {
-            Directory.CreateDirectory(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\nalozi");
-            if (!File.Exists(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\nalozi\predsednik.txt") ||
-                File.ReadAllText(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\nalozi\predsednik.txt").Length == 0)
-            {
-                Console.WriteLine("Unesite informacije o predsedniku kucnog saveta:");
-                var predsednik = new Predsednik();
-                predsednik.UnosPredsednik();
-                predsednik.IspisDatoteka();
-            }
-        }
-
         public static int PocetniMeni()
         {
             Console.WriteLine("Izaberite neku od sledece dve opcije:");
@@ -47,7 +21,7 @@ namespace KucniSavet
             return opcija;
         }
 
-        public static int Prijava()
+        public static int Prijava() // prijava na sistem **izmestiti u Stanar/Predsednik...
         {
 
             // prijava na sistem - stanari zgrade / predsednik saveta stanara
@@ -114,77 +88,18 @@ namespace KucniSavet
                 }
             }
 
-            if(indStanar == 1) // stanar se prijavio na sistem
-            {
-                Console.WriteLine("1. Zapisnik sa saveta stanara");
-                Console.WriteLine("2. Informacije o stanarima u zgradi");
-                Console.WriteLine("3. Odjava");
-                var odgovor = Convert.ToInt16(Console.ReadLine());
+            if (indStanar == 1) // stanar se prijavio na sistem
+                return Stanar.Prijava1(); // korisnicka aplikacija
+            else if (indPredsednik == 1) // predsednik se prijavio na sistem
+                return Predsednik.Prijava1();
 
-                if (odgovor == 1) // zapisnik sa saveta stanara...
-                {
-                    // pojavljuje se lista sa nazivima datoteka zapisnika sa saveta stanara:
-                    var fajloviZapisnik = Directory.GetFiles(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\zapisnici");
-                    var i = 0;
-                    foreach (var fajl in fajloviZapisnik)
-                    {
-                        Console.WriteLine("{0}. {1}", i, Path.GetFileName(fajl));
-                        i++;
-                    }
-                    Console.WriteLine("...");
-                    Console.WriteLine("Koju datoteku zelite da otvorite?");
-                    var odgDatoteka = Convert.ToInt16(Console.ReadLine());
-                    Console.WriteLine("---------------------------------");
-                    i = 0;
-                    foreach (var fajl in fajloviZapisnik)
-                    {
-                        if(odgDatoteka == i)
-                        {
-                            // ispisuje se sadrzaj zeljene datoteke
-                            Console.WriteLine(File.ReadAllText(fajl));
-                            Console.WriteLine("---------------------------------");
-                            Console.WriteLine("Da li zelite da se vratite na pocetni meni (da/ne)?");
-                            var odg = Console.ReadLine();
-                            if (odg.CompareTo("da") == 0)
-                                return ~Ok;
-                            else if (odg.CompareTo("ne") != 0)
-                                throw new Exception("Unet odgovor je razlicit od trazenog (da/ne)");
-                            break;
-                        }
-                        i++;
-                    }
-                }
-                else if (odgovor == 2) // informacije o stanarima u zgradi
-                {
-                    // ispis svih stanara koji zive u njegovoj zgradi
-                    var fajloviZgrada = Directory.GetFiles(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\nalozi");
-                    foreach (var fajl in fajloviZgrada)
-                    {
-                        var imeFajla = Path.GetFileName(fajl);
-                        if(imeFajla.CompareTo("predsednik.txt") != 0) // naziv tog fajla ne sadrzi korisnicko ime stanara
-                            Console.WriteLine(imeFajla.Split('_')[0]); // ispisuje se samo korisicko ime
-                    }
-                    Console.WriteLine("Da li zelite da se vratite na pocetni meni (da/ne)?");
-                    var odg = Console.ReadLine();
-                    if (odg.CompareTo("da") == 0)
-                        return ~Ok;
-                    else if (odg.CompareTo("ne") != 0)
-                        throw new Exception("Unet odgovor je razlicit od trazenog (da/ne)");
-                }
-                else if (odgovor == 3) // odjava
-                {
-                    return ~Ok; // vratice korisnika na pocetni meni...
-                }
-            }
-
-            return Ok;
+            return Ok; // suvisno, ali postoji jer se ne prepoznaje da ce se do ovog dela izaci iz metode
         }
 
         static void Main(string[] args)
         {
-
-            InfoZgrada();
-            InfoPredsednik();
+            Zgrada.InfoZgrada();
+            Predsednik.InfoPredsednik();
 
             while (true)
             {

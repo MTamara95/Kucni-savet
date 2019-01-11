@@ -81,5 +81,49 @@ namespace KucniSavet
                 file.WriteLine(Nosilac);
             }
         }
+
+        public static void InfoPredsednik()
+        {
+            Directory.CreateDirectory(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\nalozi");
+            if (!File.Exists(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\nalozi\predsednik.txt") ||
+                File.ReadAllText(@"D:\1.1 C# Udemy\C# projects 2\KucniSavet\nalozi\predsednik.txt").Length == 0)
+            {
+                Console.WriteLine("Unesite informacije o predsedniku kucnog saveta:");
+                var predsednik = new Predsednik();
+                predsednik.UnosPredsednik();
+                predsednik.IspisDatoteka();
+            }
+        }
+
+        public static void Prijava1Opcije()
+        {
+            Console.WriteLine("4. Registracija novog stanara");
+            Console.WriteLine("5. Kreiranje zapisnika saveta");
+        }
+
+        public static int Prijava1Akcije()
+        {
+            var odgovor = Convert.ToInt16(Console.ReadLine());
+
+            if (odgovor == 4) // registracija novog stanara
+            {
+                // ... return Registracija();
+            }
+            else if (odgovor == 5) // kreiranje zapisnika saveta
+            {
+                // return KreiranjeZapisnika();
+            }
+            return Ok; // suvisno, ali mora jer se ne prepoznaje da ce se do ovog dela izaci iz metode
+        }
+
+        public static int Prijava1() // korisnicka aplikacija - stanar zgrade
+        {
+            Stanar.Prijava1Opcije();
+            Prijava1Opcije();
+            if (Stanar.Prijava1Akcije() == ~Ok)
+                return ~Ok;
+            return Prijava1Akcije();
+        }
+
     }
 }
